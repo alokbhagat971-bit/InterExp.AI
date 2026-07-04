@@ -45,9 +45,9 @@ function Auth({isModel = false}) {
                 <div className='bg-black text-white p-2 rounded-lg' >
                     <RiRobot3Fill size={18} />  
                 </div>
-                <h2 className='text-lg font-semibold'>InterExp.AI</h2>
+                <h2 className='text-lg text-black font-semibold'>InterExp.AI</h2>
             </div>
-            <h1 className='text-2xl font-semibold text-center leading-snug mb-4'>Continue With <span className='bg-green-100 text-green-600 px-3 py-1 rounded-full inline-flex items-center gap-2' >
+            <h1 className='text-2xl text-black font-semibold text-center leading-snug mb-4'>Continue With <span className='bg-green-100 text-green-600 px-3 py-1 rounded-full inline-flex items-center gap-2' >
                 <IoSparkles size={18} />
                 AI Smart Interview
               </span>
