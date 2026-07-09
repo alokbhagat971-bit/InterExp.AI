@@ -7,10 +7,14 @@ import {
   FaChartLine,
 } from "react-icons/fa";
 import {useState} from 'react'
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { ServerApi } from "../App";
+import { setUserData } from "../redux/userSlice";
 
 function Step1SetUp({onStart}) {
+  const {userData} = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const [role,setRole] = useState("");
   const [experience,setExperience] = useState("");
   const [mode,setMode] = useState("Technical");
@@ -60,6 +64,34 @@ const handleUploadResume = async () => {
     setAnalyzing(false);
   }
 }
+
+    const handleStartInterview = async () => {
+      setLoading(true);
+      try{
+        const result = await axios.post(ServerApi+"/api/interview/generate-questions",{
+          role,
+          experience,
+          mode,
+          resumeText,
+          projects,
+          skills
+        },{withCredentials:true})
+        console.log(result.data);
+
+        if(userData){
+          dispatch(setUserData({...userData,credits:result.data.creditsLeft}))
+        }
+
+        setLoading(false);
+        onStart(
+          result.data
+        )
+
+      }catch(error){
+        console.error("Error starting interview:", error);
+        setLoading(false);
+      }
+    }
     return (
       <motion.div
       initial={{opacity: 0}}
@@ -123,7 +155,7 @@ const handleUploadResume = async () => {
                   className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
                   
                 />
-              </div>
+              </div> 
 
               <div className="relative">
                 <FaBriefcase className="absolute left-4 top-4 text-gray-400" />
@@ -137,9 +169,9 @@ const handleUploadResume = async () => {
                 
               </div>
               <select value={mode} onChange={(e) => setMode(e.target.value)} className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 outline-none transition">
-                  <option value="online">Technical Interview</option>
-                  <option value="in-person">HR Interview</option>
-                </select>
+    <option value="Technical">Technical Interview</option>
+    <option value="HR">HR Interview</option>
+</select>
 
                 {!analysisDone && (
                   <motion.div
@@ -202,9 +234,12 @@ const handleUploadResume = async () => {
                       </p>
                       <div className='flex flex-wrap gap-2'>
                         {skills.map((skill,index) => (
-                          <span key={index}
+                          <span 
+                          key={index}
                           className='bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm'
-                          >{skill}</span>
+                          >
+                            {skill}
+                          </span>
                         ))}
                      
                       </div>
@@ -214,12 +249,13 @@ const handleUploadResume = async () => {
                 )}
 
                 <motion.button
-                disabled={!role || !experience}
+                onClick={handleStartInterview}
+                disabled={!role || !experience || loading}
                 whileHover={{scale:1.02}}
                 whileTap={{scale:0.95}}
                 className="w-full disabled:bg-gray-600 bg-green-600 hover:bg-green-700 text-white py-3 rounded-full text-lg font-semibold transition duration-300 shadow-md"
                 >
-                  Start Interview
+                  {loading ? "Starting Interview..." : "Start Interview"}
                 </motion.button>
             </div>
           </motion.div>
