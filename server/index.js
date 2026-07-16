@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import dns from 'dns';
 import connectDB from './config/connectDB.js';
 import cookiesParser from 'cookie-parser';
 import authRouter from './routes/authRoute.js';
@@ -9,6 +10,11 @@ import interviewRouter from './routes/interviewRoute.js'
 import paymentRouter from './routes/paymentRoute.js'
 
 dotenv.config();
+
+// Force Node to use Google/Cloudflare DNS - fixes SRV record
+// resolution failures (ECONNREFUSED on _mongodb._tcp...) seen on
+// some networks where the default resolver mishandles SRV queries
+dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 const app = express();
 
