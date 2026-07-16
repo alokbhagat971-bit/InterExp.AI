@@ -11,7 +11,7 @@ import Pricing from './pages/Pricing'
 import InterviewReport from './pages/InterviewReport'
 
 
-export const ServerApi = "http://localhost:8000";
+export const ServerApi = "https://interexp-ai.onrender.com";
 
 function App() {
 
