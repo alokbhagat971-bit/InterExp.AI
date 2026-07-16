@@ -6,6 +6,7 @@ import authRouter from './routes/authRoute.js';
 import userRouter from './routes/userRoute.js';
 import cors from 'cors';
 import interviewRouter from './routes/interviewRoute.js'
+import paymentRouter from './routes/paymentRoute.js'
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(cookiesParser());
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/interview",interviewRouter)
+app.use("/api/payment",paymentRouter)
 
 const PORT = process.env.PORT || 6000;
 
