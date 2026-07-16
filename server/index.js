@@ -19,7 +19,7 @@ dns.setServers(['8.8.8.8', '1.1.1.1']);
 const app = express();
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://interexp-ai-1client.onrender.com",
     credentials: true
 }));
 
