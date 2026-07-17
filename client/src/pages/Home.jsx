@@ -7,9 +7,16 @@ import {
     BsMic,
     BsClock,
     BsBarChart,
-    BsFileEarmarkText
+    BsFileEarmarkText,
+    BsRocketTakeoff,
+    BsClockHistory,
+    BsArrowRight,
+    BsShieldCheck,
+    BsCpu,
+    BsGraphUp,
+    BsLock
    } from "react-icons/bs";
-import {useState} from 'react'
+import {useState, Fragment} from 'react'
 import {useNavigate} from 'react-router-dom'
 import AuthModel from '../components/AuthModel'
 import evalImg from "../assets/images/ai-ans.png"
@@ -20,6 +27,7 @@ import creditImg from "../assets/images/credit.png"
 import resumeImg from "../assets/images/resume.png"
 import pdfImg from "../assets/images/pdf.png"
 import analyticsImg from "../assets/images/history.png"
+import laptop from '../assets/images/blue_laptop.png'
 import Footer from '../components/Footer'
 
 function Home() {
@@ -28,24 +36,49 @@ function Home() {
   const navigate = useNavigate()
   const parts =[
     {
-      icon:<RiRobot3Fill size={24} />,
+      icon:<RiRobot3Fill size={18} />,
       step:"STEP 1",
       title:"Role & Experience Slection",
       desc:"AI adjusts difficulty based on selected job role."
     },
     {
-      icon:<BsMic size={24} />, 
+      icon:<BsMic size={18} />, 
       step:"STEP 2",
       title:"AI-Powered Voice Interview",
       desc:"Dynamic follow-up questions based on your answers."
     },
     {
-      icon:<BsClock size={24} />,  
+      icon:<BsClock size={18} />,  
       step:"STEP 3",
       title:"Timer Based Simulation",
       desc:"Real Interview pressure with time tracking."
     }
 
+  ]
+
+  const stepColors = [
+    "bg-green-50 text-green-500",
+    "bg-blue-50 text-blue-500",
+    "bg-purple-50 text-purple-500"
+  ]
+
+  const stepTextColors = [
+    "text-green-600",
+    "text-blue-600",
+    "text-purple-600"
+  ]
+
+  const glowColors = [
+    "bg-green-300",
+    "bg-blue-300",
+    "bg-purple-300"
+  ]
+
+  const trustBadges = [
+    { icon:<BsShieldCheck size={20} />, label:"Realistic Experience", desc:"Industry standard interview simulation", color:"text-green-600", bg:"bg-green-50" },
+    { icon:<BsCpu size={20} />, label:"AI Feedback", desc:"Get actionable insights to improve faster", color:"text-blue-600", bg:"bg-blue-50" },
+    { icon:<BsGraphUp size={20} />, label:"Track & Improve", desc:"Analyze performance and grow continuously", color:"text-purple-600", bg:"bg-purple-50" },
+    { icon:<BsLock size={20} />, label:"Secure & Private", desc:"Your data is encrypted and always safe", color:"text-green-600", bg:"bg-green-50" },
   ]
 
   const cards1=[
@@ -102,38 +135,41 @@ function Home() {
       <Navbar />
       <div className='flex-1 px-6 py-20'>
         <div className="max-w-6xl mx-auto">
-        <div className="flex justify-center mb-6">
-          <div className="bg-gray-100 text-gray-600 text-sm px-4 py-2 rounded-full flex items-center gap-2">
-            <IoSparkles size={16} className='bg-green-50 text-green-600' />
-            AI Powered Smart Interview Platform
-          </div>
-          
-        </div>
-        <div className="text-center mb-28">
-            <motion.h1
-            initial={{opacity:0,y:30}} 
+        <div className="grid md:grid-cols-2 gap-12 items-center mb-28">
+          <motion.div
+            initial={{opacity:0,y:30}}
             animate={{opacity:1,y:0}}
             transition={{duration:0.6}}
-            className='text-4xl md:text-6xl font-semibold leading-tight max-w-4xl mx-auto' >
+            className='text-center md:text-left'
+          >
+            <div className="flex justify-center md:justify-start mb-6">
+              <div className="bg-gray-100 text-gray-600 text-sm px-4 py-2 rounded-full flex items-center gap-2">
+                <IoSparkles size={16} className='text-green-600' />
+                AI Powered Smart Interview Platform
+              </div>
+            </div>
 
-              Practice Interview with
+            <h1 className='text-4xl md:text-6xl font-semibold leading-tight'>
+              Practice Interview with{" "}
               <span className='relative inline-block' >
-                <span className='bg-green-100 text-green-600 px-5 py-1 rounded-full' >
+                <span className='text-green-600' >
                   AI Intelligence
                 </span>
+                <svg className="absolute left-0 -bottom-1 w-full" height="8" viewBox="0 0 200 8" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2 5.5C40 1 100 1 198 5.5" stroke="#16a34a" strokeWidth="3" strokeLinecap="round" />
+                </svg>
               </span>
-
-            </motion.h1>
+            </h1>
 
             <motion.p
             initial={{opacity:0}}
             animate={{opacity:1}}
             transition={{duration:0.8}}
-            className='text-gray-500 mt-6 max-w-2xl mx-auto text-lg'>
+            className='text-gray-500 mt-6 max-w-xl mx-auto md:mx-0 text-lg'>
                   Role-based mock interviews with smart follow-up questions, adaptive difficulty and real-time performance evaluation.
             </motion.p>
 
-            <div className="flex flex-wrap justify-center gap-4 mt-10">
+            <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-10">
               <motion.button
               onClick={() => {
                 if(!userData){
@@ -147,8 +183,9 @@ function Home() {
                 transition={{duration:0.12}}
                 whileHover={{y:-4,boxShadow:"0px 10px 20px rgba(0,0,0,0.2)"}}
                 whileTap={{y:0,boxShadow:"0px 5px 10px rgba(0,0,0,0.1)"}}
-                className='bg-black text-white px-10 py-3 rounded-full hover:opacity-90 transition shadow-md'
+                className='bg-green-600 text-white px-8 py-3 rounded-full hover:bg-green-700 transition shadow-md flex items-center gap-2'
               >
+                <BsRocketTakeoff size={16} />
                 Start Interview
               </motion.button>
 
@@ -165,85 +202,140 @@ function Home() {
                 transition={{duration:0.12}}
                 whileHover={{y:-4,boxShadow:"0px 10px 20px rgba(0,0,0,0.2)"}}
                 whileTap={{y:0,boxShadow:"0px 5px 10px rgba(0,0,0,0.1)"}}
-                className='border border-gray-300 px-10 py-3 rounded-full hover:bg-gray-100 transition '
+                className='border border-gray-300 px-8 py-3 rounded-full hover:bg-gray-100 transition flex items-center gap-2'
               >
+                <BsClockHistory size={16} />
                 View History
               </motion.button>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="flex flex-col md:flex-row justify-center items-center gap-10 mb-28">
+          <motion.div
+            initial={{opacity:0,scale:0.9}}
+            animate={{opacity:1,scale:1}}
+            transition={{duration:0.8}}
+            className='flex justify-center'
+          >
+            <div className="w-full max-w-md aspect-square flex items-center justify-center">
+              <img src={laptop} alt="AI Interview" className='w-full h-full object-contain' />
+            </div>
+          </motion.div>
+        </div>
+
+          <div className="flex justify-center mb-4">
+            <div className="bg-green-50 text-green-600 text-xs font-semibold px-4 py-1.5 rounded-full flex items-center gap-2 tracking-wider">
+              <IoSparkles size={14} />
+              HOW IT WORKS
+            </div>
+          </div>
+          <h2 className='text-3xl md:text-4xl font-semibold text-center mb-16'>
+            Your Journey to Interview <span className='bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent'>Success</span>
+          </h2>
+
+          <div className="flex flex-col md:flex-row items-stretch gap-4 md:gap-0 mb-6">
 
             {parts.map((item,index) => (
-              <motion.div key={index}
-              initial={{opacity:0,y:60}}
+              <Fragment key={index}>
+              <motion.div
+              initial={{opacity:0,y:20}}
               whileInView={{opacity:1,y:0}}
-              transition={{duration:0.6+index*0.2}}
-              whileHover={{rotate:0,scale:1.06}}
-              className={`
-relative bg-white rounded-3xl border-2 border-green-100
-hover:border-green-500 p-10 w-80 max-w-[90%] shadow-md
-hover:shadow-2xl
-transition-all duration-300
-${index === 0 ? "rotate-[-4deg]" : ""}
-${index === 1 ? "rotate-[3deg] md:-mt-6 shadow-xl" : ""}
-${index === 2 ? "rotate-[-3deg]" : ""}
-`} >
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{duration:0.5+index*0.15}}
+              whileHover={{y:-6}}
+              className='relative flex-1 bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-xl hover:border-green-100 transition-all duration-300' >
 
-                <div className='absolute -top-8 left-1/2 -translate-x-1/2 bg-white
-border-2 border-green-500 text-green-600
-w-16 h-16 rounded-2xl flex
-items-center justify-center shadow-lg'>
-                  {item.icon}
+                <div className='flex items-center justify-between mb-4'>
+                  <div className="relative">
+                    <div className={`absolute inset-0 rounded-full blur-md opacity-50 ${glowColors[index % glowColors.length]}`}></div>
+                    <div className={`relative w-11 h-11 rounded-full flex items-center justify-center shadow-sm ${stepColors[index % stepColors.length]}`}>
+                      {item.icon}
+                    </div>
+                  </div>
+                  <span className='text-xs text-gray-300 font-semibold'>{String(index+1).padStart(2,"0")}</span>
                 </div>
-                <div className="pt-10 text-center">
-                  <div className='text-xs text-green-600 font-semibold mb-2 tracking-wider' >{item.step} </div>
-                  <h3 className='font-semibold mb-3 text-lg' >{item.title} </h3>
-                  <p className='text-sm text-gray-500 leading-relaxed' >
-                    {item.desc}
-                  </p>
-                </div>
+                <div className={`text-xs font-semibold mb-1.5 tracking-wider ${stepTextColors[index % stepTextColors.length]}`}>{item.step}</div>
+                <h3 className='font-semibold mb-1.5 text-lg' >{item.title} </h3>
+                <p className='text-sm text-gray-500 leading-relaxed' >
+                  {item.desc}
+                </p>
                 </motion.div>
+
+                {index < parts.length - 1 && (
+                  <div className="hidden md:flex items-center justify-center w-10 shrink-0 mt-[3.25rem]">
+                    <svg width="32" height="14" viewBox="0 0 32 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <line x1="0" y1="7" x2="22" y2="7" stroke="#86efac" strokeWidth="2" strokeDasharray="4 4" strokeLinecap="round" />
+                      <path d="M20 2L26 7L20 12" stroke="#86efac" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                )}
+              </Fragment>
+            ))}
+          </div>
+
+          <div className="bg-white border border-gray-100 rounded-2xl grid grid-cols-2 md:grid-cols-4 gap-8 px-8 py-7 mb-28 shadow-sm">
+            {trustBadges.map((badge,index) => (
+              <div key={index} className="flex flex-col gap-2">
+                <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${badge.bg} ${badge.color}`}>
+                  {badge.icon}
+                </div>
+                <span className='text-sm text-gray-800 font-semibold'>{badge.label}</span>
+                <span className='text-xs text-gray-400 leading-relaxed'>{badge.desc}</span>
+              </div>
             ))}
           </div>
 
           <div className="mb-32">
+            <div className="flex justify-center mb-4">
+              <div className="bg-green-50 text-green-600 text-xs font-semibold px-4 py-1.5 rounded-full flex items-center gap-2 tracking-wider">
+                <IoSparkles size={14} />
+                POWERFUL FEATURES
+              </div>
+            </div>
             <motion.h2
             initial={{opacity:0,y:20}}
             whileInView={{opacity:1,y:0}}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{duration:0.6}}
 
-            className='text-4xl font-semibold text-center mb-16'
+            className='text-3xl md:text-4xl font-semibold text-center mb-3'
             >
                 Advanced AI {" "}
                 <span className='text-green-600' >Capabilities</span>
             </motion.h2>
+            <p className='text-gray-500 text-center mb-16'>Smart tools to evaluate, analyze and improve your interview performance.</p>
 
-            <div className="grid md:grid-cols-2 gap-10">
+            <div className="grid md:grid-cols-2 gap-8">
                 {cards1.map((item,index) => (
                   <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   whileHover={{ scale: 1.02 }} 
-                  key={index} className='bg-white border border-gray-200 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all'>
+                  key={index} className='bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all'>
                     <div className="flex flex-col md:flex-row items-center gap-8">
-                      <div className="w-full md:w-1/2 flex justify-center">
-                      <img src={item.image} alt={item.title}
-                      className='w-full h-auto object-contain max-h-64'
-                      />
-                      </div>
 
-                      <div className="w-full md:w-1/2">
+                      <div className="w-full md:w-1/2 order-2 md:order-1">
                       <div className="bg-green-50 text-green-600 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
                         {item.icon}
                       </div>
                       <h3 className='font-semibold mb-3 text-xl' > 
                         {item.title}
                       </h3>
-                      <p className='text-gray-500 text-sm leading-relaxed' >
+                      <p className='text-gray-500 text-sm leading-relaxed mb-6' >
                         {item.desc}
                       </p>
+                      <button className='w-9 h-9 rounded-full bg-green-50 text-green-600 flex items-center justify-center hover:bg-green-100 transition'>
+                        <BsArrowRight size={16} />
+                      </button>
+                      </div>
+
+                      <div className="w-full md:w-1/2 order-1 md:order-2 flex justify-center">
+                      <div className="w-full aspect-[4/3] flex items-center justify-center">
+                      <img src={item.image} alt={item.title}
+                      className='w-full h-full object-contain'
+                      />
+                      </div>
                       </div>
                     </div>
 
@@ -253,40 +345,54 @@ items-center justify-center shadow-lg'>
           </div>
 
           <div className="mb-32">
+            <div className="flex justify-center mb-4">
+              <div className="bg-green-50 text-green-600 text-xs font-semibold px-4 py-1.5 rounded-full flex items-center gap-2 tracking-wider">
+                <IoSparkles size={14} />
+                FLEXIBLE MODES FOR EVERY GOAL
+              </div>
+            </div>
             <motion.h2
             initial={{opacity:0,y:20}}
             whileInView={{opacity:1,y:0}}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{duration:0.6}}
 
-            className='text-4xl font-semibold text-center mb-16'
+            className='text-3xl md:text-4xl font-semibold text-center mb-3'
             >
                 Multiple Interview {" "}
                 <span className='text-green-600' >Modes</span>
             </motion.h2>
+            <p className='text-gray-500 text-center mb-16'>Choose the perfect interview mode that matches your needs and helps you perform your best.</p>
 
-            <div className="grid md:grid-cols-2 gap-10">
+            <div className="grid md:grid-cols-2 gap-8">
                 {card2.map((item,index) => (
                   <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   whileHover={{ y:-6 }} 
-                  key={index} className='bg-white border border-gray-200 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all'>
-                    <div className="flex justify-between items-center gap-6">
-                      <div className="w-full md:w-1/2 flex justify-center">
-                      <img src={item.img} alt={item.title}
-                      className='w-full h-auto object-contain max-h-64'
-                      />
-                      </div>
+                  key={index} className='bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all'>
+                    <div className="flex flex-col md:flex-row items-center gap-6">
 
-                      <div className="w-full md:w-1/2">
-                      
+                      <div className="w-full md:w-1/2 order-2 md:order-1">
                       <h3 className='font-semibold mb-3 text-xl' > 
                         {item.title}
                       </h3>
-                      <p className='text-gray-500 text-sm leading-relaxed' >
+                      <p className='text-gray-500 text-sm leading-relaxed mb-6' >
                         {item.desc}
                       </p>
+                      <button className='w-9 h-9 rounded-full bg-gray-50 text-gray-600 flex items-center justify-center hover:bg-gray-100 transition'>
+                        <BsArrowRight size={16} />
+                      </button>
+                      </div>
+
+                      <div className="w-full md:w-1/2 order-1 md:order-2 flex justify-center">
+                      <div className="w-full aspect-[4/3] flex items-center justify-center">
+                      <img src={item.img} alt={item.title}
+                      className='w-full h-full object-contain'
+                      />
+                      </div>
                       </div>
                     </div>
 
