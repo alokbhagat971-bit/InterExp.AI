@@ -14,7 +14,12 @@ import {
     BsShieldCheck,
     BsCpu,
     BsGraphUp,
-    BsLock
+    BsLock,
+    BsCheckCircleFill,
+    BsPeopleFill,
+    BsCodeSlash,
+    BsSoundwave,
+    BsWallet2
    } from "react-icons/bs";
 import {useState, Fragment} from 'react'
 import {useNavigate} from 'react-router-dom'
@@ -85,49 +90,84 @@ function Home() {
     {
   image: evalImg,
   icon: <BsBarChart size={20} />,
-  title: "AI Answer Evaluation",
-  desc: "Scores communication, technical accuracy and confidence."
+  titleLine1: "AI Answer",
+  titleLine2: "Evaluation",
+  desc: "AI evaluates your answers in real-time across key parameters.",
+  points: ["Communication", "Technical Accuracy", "Confidence Score"],
+  accent: "green"
 },
 {
   image: resumeImg,
   icon: <BsFileEarmarkText size={20} />,
-  title: "Resume Based Interview",
-  desc: "Project-specific questions based on uploaded resume."
+  titleLine1: "Resume Based",
+  titleLine2: "Interview",
+  desc: "Get highly relevant, project-specific questions based on your resume.",
+  points: ["Resume Parsing", "Skill Mapping", "Personalized Questions"],
+  accent: "blue"
 },
 {
   image: pdfImg,
   icon: <BsFileEarmarkText size={20} />,
-  title: "Downloadable PDF Report",
-  desc: "Detailed strengths, weaknesses and improvement insights."
+  titleLine1: "Downloadable",
+  titleLine2: "PDF Report",
+  desc: "Get a comprehensive report with actionable insights and suggestions.",
+  points: ["Strengths & Weaknesses", "Detailed Feedback", "Improvement Tips"],
+  accent: "purple"
 },
 {
   image: analyticsImg,
   icon: <BsBarChart size={20} />,
-  title: "History & Analytics",
-  desc: "Track progress with performance graphs and topic analysis."
+  titleLine1: "History &",
+  titleLine2: "Analytics",
+  desc: "Track your progress over time with detailed analytics and insights.",
+  points: ["Performance Trends", "Topic Analysis", "Compare & Improve"],
+  accent: "orange"
 }
   ]
+
+  const accentClasses = {
+    green: { iconBg:"bg-green-50", iconText:"text-green-600", title:"text-green-600", check:"text-green-500", btnBg:"bg-green-50", btnText:"text-green-600", btnHover:"hover:bg-green-100", underline:"bg-green-400" },
+    blue: { iconBg:"bg-blue-50", iconText:"text-blue-600", title:"text-blue-600", check:"text-blue-500", btnBg:"bg-blue-50", btnText:"text-blue-600", btnHover:"hover:bg-blue-100", underline:"bg-blue-400" },
+    purple: { iconBg:"bg-purple-50", iconText:"text-purple-600", title:"text-purple-600", check:"text-purple-500", btnBg:"bg-purple-50", btnText:"text-purple-600", btnHover:"hover:bg-purple-100", underline:"bg-purple-400" },
+    orange: { iconBg:"bg-orange-50", iconText:"text-orange-600", title:"text-orange-600", check:"text-orange-500", btnBg:"bg-orange-50", btnText:"text-orange-600", btnHover:"hover:bg-orange-100", underline:"bg-orange-400" },
+  }
 
   const card2=[
     {
   img: hrImg,
-  title: "HR Interview Mode",
-  desc: "Behavioral and communication based evaluation."
+  icon: <BsPeopleFill size={20} />,
+  titleLine1: "HR",
+  titleLine2: "Interview Mode",
+  desc: "Behavioral and communication based evaluation to assess your people skills.",
+  points: ["Communication Skills", "Behavioral Analysis", "Situational Questions"],
+  accent: "green"
 },
 {
   img: techImg,
-  title: "Technical Mode",
-  desc: "Deep technical questioning based on selected role."
+  icon: <BsCodeSlash size={20} />,
+  titleLine1: "Technical",
+  titleLine2: "Mode",
+  desc: "Deep technical questioning based on your selected role and expertise.",
+  points: ["In-depth Concepts", "Coding & Problem Solving", "Technical Scenarios"],
+  accent: "purple"
 },
 {
   img: confidenceImg,
-  title: "Confidence Detection",
-  desc: "Basic tone and voice analysis insights."
+  icon: <BsSoundwave size={20} />,
+  titleLine1: "Confidence",
+  titleLine2: "Detection",
+  desc: "Analyze your tone and voice to detect confidence and areas of improvement.",
+  points: ["Tone & Pitch Analysis", "Speech Clarity", "Confidence Insights"],
+  accent: "orange"
 },
 {
   img: creditImg,
-  title: "Credits System",
-  desc: "Unlock premium interview sessions easily."
+  icon: <BsWallet2 size={20} />,
+  titleLine1: "Credits",
+  titleLine2: "System",
+  desc: "Unlock premium interview sessions and advanced features easily.",
+  points: ["Flexible Credit Plans", "Unlock Premium Features", "Secure Transactions"],
+  accent: "blue"
 }
   ]
   return (
@@ -305,42 +345,55 @@ function Home() {
             <p className='text-gray-500 text-center mb-16'>Smart tools to evaluate, analyze and improve your interview performance.</p>
 
             <div className="grid md:grid-cols-2 gap-8">
-                {cards1.map((item,index) => (
+                {cards1.map((item,index) => {
+                  const accent = accentClasses[item.accent]
+                  return (
                   <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   whileHover={{ scale: 1.02 }} 
-                  key={index} className='bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all'>
-                    <div className="flex flex-col md:flex-row items-center gap-8">
+                  key={index} className='bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all overflow-hidden'>
+                    <div className="flex items-center gap-6">
 
-                      <div className="w-full md:w-1/2 order-2 md:order-1">
-                      <div className="bg-green-50 text-green-600 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
-                        {item.icon}
-                      </div>
-                      <h3 className='font-semibold mb-3 text-xl' > 
-                        {item.title}
-                      </h3>
-                      <p className='text-gray-500 text-sm leading-relaxed mb-6' >
-                        {item.desc}
-                      </p>
-                      <button className='w-9 h-9 rounded-full bg-green-50 text-green-600 flex items-center justify-center hover:bg-green-100 transition'>
-                        <BsArrowRight size={16} />
-                      </button>
+                      <div className="w-1/2 shrink-0">
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 ${accent.iconBg} ${accent.iconText}`}>
+                          {item.icon}
+                        </div>
+                        <h3 className='font-semibold mb-3 text-xl leading-snug'>
+                          {item.titleLine1}
+                          <br />
+                          <span className={accent.title}>{item.titleLine2}</span>
+                        </h3>
+                        <p className='text-gray-500 text-sm leading-relaxed mb-5'>
+                          {item.desc}
+                        </p>
+                        <ul className="space-y-2 mb-6">
+                          {item.points.map((point, pIndex) => (
+                            <li key={pIndex} className="flex items-center gap-2 text-sm text-gray-600">
+                              <BsCheckCircleFill size={14} className={accent.check} />
+                              {point}
+                            </li>
+                          ))}
+                        </ul>
+                        <button className={`w-9 h-9 rounded-full flex items-center justify-center transition ${accent.btnBg} ${accent.btnText} ${accent.btnHover}`}>
+                          <BsArrowRight size={16} />
+                        </button>
                       </div>
 
-                      <div className="w-full md:w-1/2 order-1 md:order-2 flex justify-center">
-                      <div className="w-full aspect-[4/3] flex items-center justify-center">
-                      <img src={item.image} alt={item.title}
-                      className='w-full h-full object-contain'
-                      />
-                      </div>
+                      <div className="w-1/2 flex justify-center">
+                        <div className="w-full aspect-square flex items-center justify-center">
+                          <img src={item.image} alt={item.titleLine1 + " " + item.titleLine2}
+                          className='w-full h-full object-contain'
+                          />
+                        </div>
                       </div>
                     </div>
 
                     </motion.div>
-                ))}
+                  )
+                })}
             </div>
           </div>
 
@@ -364,41 +417,58 @@ function Home() {
             </motion.h2>
             <p className='text-gray-500 text-center mb-16'>Choose the perfect interview mode that matches your needs and helps you perform your best.</p>
 
-            <div className="grid md:grid-cols-2 gap-8">
-                {card2.map((item,index) => (
+            <div className="grid md:grid-cols-2 gap-8 mb-8">
+                {card2.map((item,index) => {
+                  const accent = accentClasses[item.accent]
+                  return (
                   <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   whileHover={{ y:-6 }} 
-                  key={index} className='bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all'>
-                    <div className="flex flex-col md:flex-row items-center gap-6">
+                  key={index} className='bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all overflow-hidden'>
+                    <div className="flex items-center gap-6">
 
-                      <div className="w-full md:w-1/2 order-2 md:order-1">
-                      <h3 className='font-semibold mb-3 text-xl' > 
-                        {item.title}
-                      </h3>
-                      <p className='text-gray-500 text-sm leading-relaxed mb-6' >
-                        {item.desc}
-                      </p>
-                      <button className='w-9 h-9 rounded-full bg-gray-50 text-gray-600 flex items-center justify-center hover:bg-gray-100 transition'>
-                        <BsArrowRight size={16} />
-                      </button>
+                      <div className="w-1/2 shrink-0">
+                        <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${accent.iconBg} ${accent.iconText}`}>
+                          {item.icon}
+                        </div>
+                        <h3 className='font-semibold mb-2 text-xl leading-snug'>
+                          <span className={accent.title}>{item.titleLine1}</span> {item.titleLine2}
+                        </h3>
+                        <div className={`w-8 h-1 rounded-full mb-3 ${accent.underline}`}></div>
+                        <p className='text-gray-500 text-sm leading-relaxed mb-5'>
+                          {item.desc}
+                        </p>
+                        <ul className="space-y-2 mb-6">
+                          {item.points.map((point, pIndex) => (
+                            <li key={pIndex} className="flex items-center gap-2 text-sm text-gray-600">
+                              <BsCheckCircleFill size={14} className={accent.check} />
+                              {point}
+                            </li>
+                          ))}
+                        </ul>
+                        <button className={`w-9 h-9 rounded-full flex items-center justify-center transition ${accent.btnBg} ${accent.btnText} ${accent.btnHover}`}>
+                          <BsArrowRight size={16} />
+                        </button>
                       </div>
 
-                      <div className="w-full md:w-1/2 order-1 md:order-2 flex justify-center">
-                      <div className="w-full aspect-[4/3] flex items-center justify-center">
-                      <img src={item.img} alt={item.title}
-                      className='w-full h-full object-contain'
-                      />
-                      </div>
+                      <div className="w-1/2 flex justify-center">
+                        <div className="w-full aspect-square flex items-center justify-center">
+                          <img src={item.img} alt={item.titleLine1 + " " + item.titleLine2}
+                          className='w-full h-full object-contain'
+                          />
+                        </div>
                       </div>
                     </div>
 
                     </motion.div>
-                ))}
+                  )
+                })}
             </div>
+
+           
           </div>
       </div>
       </div>
